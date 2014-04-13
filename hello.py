@@ -55,7 +55,7 @@ class gmail:
 # routing
 @app.route('/')
 def index():
-    return 'Hello World! Why are you here?'
+    return json.dumps('Hello World! Why are you here?')
 
 @app.route('/twitter/<query>')
 def twitter(query):
@@ -65,7 +65,7 @@ def twitter(query):
 def gmailRequest():
     g = gmail()
     g.login(request.args.get('username'), request.args.get('password'))
-    return g.get_unread_count()
+    return json.dumps(g.get_unread_count())
 
 @app.route('/oauth2callback')
 def callback():
