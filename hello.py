@@ -15,8 +15,7 @@ twitter = Twython(APP_KEY, APP_SECRET, oauth_version=2)
 ACCESS_TOKEN = twitter.obtain_access_token()
 APP_KEY = 'U2dIR7IRpydoxaFSUk0hM4ZBZ'
 twitter = Twython(APP_KEY, access_token=ACCESS_TOKEN)
-
-
+tweets = twitter.search(q='LVHack', count=100, result_type='recent')
 
 # routing
 @app.route('/')
@@ -25,9 +24,12 @@ def index():
 
 @app.route('/twitter/<query>')
 def twitter(query):
-    tweets = twitter.search(q=query, count=100, result_type='recent')
     return json.dumps(tweets)
 
 @app.route('/gmail')
 def gmail():
     return 'Fuck gmail'
+
+@app.route('/oauth2callback')
+def callback():
+    return request.args.get('code')
